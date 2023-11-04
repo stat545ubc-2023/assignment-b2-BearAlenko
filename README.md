@@ -6,7 +6,14 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of countingMissings is to …
+This package contains a function to count missing values for all columns
+by group. By passing the data frame or tibble and columns to group by,
+this function will return a data frame or tibble with the number of NAs
+in each group specified in parameters. You can also pass the optional
+parameter “.group” to specify whether to keep the output data frame
+grouped by groups.
+
+The dependency is the dplyr library.
 
 ## Installation
 
@@ -20,33 +27,49 @@ devtools::install_github("stat545ubc-2023/countingMissings")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This example computes the number of missing values in the `airquality`
+dataset grouped by the `cyl` column.
 
 ``` r
 library(countingMissings)
-## basic example code
+count_all_missing_by_group(airquality, Month)
+#> # A tibble: 5 × 6
+#>   Month Ozone Solar.R  Wind  Temp   Day
+#>   <int> <int>   <int> <int> <int> <int>
+#> 1     5     5       4     0     0     0
+#> 2     6    21       0     0     0     0
+#> 3     7     5       0     0     0     0
+#> 4     8     5       3     0     0     0
+#> 5     9     1       0     0     0     0
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+This example has the same output as the last example, but shows off an
+alternative way of invoking the `count_all_missing_by_group()`: piping
+the dataset into the function.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+airquality |> count_all_missing_by_group(Month) 
+#> # A tibble: 5 × 6
+#>   Month Ozone Solar.R  Wind  Temp   Day
+#>   <int> <int>   <int> <int> <int> <int>
+#> 1     5     5       4     0     0     0
+#> 2     6    21       0     0     0     0
+#> 3     7     5       0     0     0     0
+#> 4     8     5       3     0     0     0
+#> 5     9     1       0     0     0     0
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+The optional `.groups` argument allows us to keep the output grouped by
+the grouping column. See example below; notice how the output is a
+grouped tibble, rather than the ungrouped tibble output of the earlier
+examples.
 
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+    #> # A tibble: 5 × 6
+    #> # Groups:   Month [5]
+    #>   Month Ozone Solar.R  Wind  Temp   Day
+    #>   <int> <int>   <int> <int> <int> <int>
+    #> 1     5     5       4     0     0     0
+    #> 2     6    21       0     0     0     0
+    #> 3     7     5       0     0     0     0
+    #> 4     8     5       3     0     0     0
+    #> 5     9     1       0     0     0     0
