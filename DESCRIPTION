@@ -1,6 +1,6 @@
 Package: countingMissings
 Title: Count Missing Values For All Columns By Group
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("Zehao", "Zhu", , "zzh2015@ece.ubc.ca", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
