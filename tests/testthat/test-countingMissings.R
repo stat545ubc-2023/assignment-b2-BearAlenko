@@ -1,10 +1,10 @@
-test_that("Output matches direct call to dplyr", {
-  small_tbl <- dplyr::tribble(~group, ~var1, ~var2,
-                       "A", 1, NA,
-                       "A", 2, "x",
-                       "B", NA, "y",
-                       "C", 3, "z")
+small_tbl <- dplyr::tribble(~group, ~var1, ~var2,
+                            "A", 1, NA,
+                            "A", 2, "x",
+                            "B", NA, "y",
+                            "C", 3, "z")
 
+test_that("Output matches direct call to dplyr", {
   expect_equal( small_tbl |> dplyr::group_by(group) |>
                   dplyr::summarize(dplyr::across(dplyr::everything(), ~sum(is.na(.x))),
                             .groups = "drop"),
